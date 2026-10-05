@@ -9,29 +9,27 @@
 
     <title>Grand Stay</title>
 
-    <link rel="stylesheet"
-          href="{% static 'booking/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'booking/css/style.css' %}">
 </head>
 
 <body>
 
-<!-- NAVBAR -->
 
-<nav class="navbar">
-    <div class="nav-container">
-        <div class="logo">
-            <div>
-                <h2>Grand Stay</h2>
-                <small>Hotel & Resort</small>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <div>
+                    <h2>Grand Stay</h2>
+                    <small>Hotel & Resort</small>
+                </div>
             </div>
         </div>
-    </div>
 
-    
 
-    <div class="nav-links">
 
-        {% if user.is_authenticated %}
+        <div class="nav-links">
+
+            {% if user.is_authenticated %}
 
             <span>Hi, {{ user.username }}</span>
 
@@ -43,7 +41,7 @@
                 Logout
             </a>
 
-        {% else %}
+            {% else %}
 
             <a href="{% url 'login' %}">
                 Login
@@ -53,129 +51,114 @@
                 Register
             </a>
 
-        {% endif %}
+            {% endif %}
 
-    </div>
+        </div>
 
-</nav>
-
-
-<!-- HERO -->
-
-<section class="hero">
-
-    <div class="hero-content">
-
-        <p class="hero-small">
-            WELCOME TO
-        </p>
-
-        <h1>
-            GRAND STAY
-        </h1>
-
-        <p>
-            Discover beautiful hotels and comfortable rooms
-            for your perfect stay.
-        </p>
-
-    </div>
-
-</section>
+    </nav>
 
 
-<!-- SEARCH -->
 
-<section class="hotel-search">
+    <section class="hero">
 
-    <form method="GET"
-          action="{% url 'home' %}">
+        <div class="hero-content">
 
-        <input
-            type="text"
-            name="q"
-            value="{{ query }}"
-            placeholder="Search hotel or location..."
-        >
+            <p class="hero-small">
+                WELCOME TO
+            </p>
 
-        <button type="submit">
-            Search
-        </button>
+            <h1>
+                GRAND STAY
+            </h1>
 
-    </form>
+            <p>
+                Discover beautiful hotels and comfortable rooms
+                for your perfect stay.
+            </p>
 
-</section>
+        </div>
 
-
-<!-- HOTELS -->
-
-<section class="hotels-section">
-
-    <div class="section-heading">
-
-        <p>OUR HOTELS</p>
-
-        <h2>
-            Find Your Perfect Stay
-        </h2>
-
-    </div>
+    </section>
 
 
-    {% if hotels %}
+
+    <section class="hotel-search">
+
+        <form method="GET" action="{% url 'home' %}">
+
+            <input type="text" name="q" value="{{ query }}" placeholder="Search hotel or location...">
+
+            <button type="submit">
+                Search
+            </button>
+
+        </form>
+
+    </section>
+
+
+
+    <section class="hotels-section">
+
+        <div class="section-heading">
+
+            <p>OUR HOTELS</p>
+
+            <h2>
+                Find Your Perfect Stay
+            </h2>
+
+        </div>
+
+
+        {% if hotels %}
 
         <div class="hotel-grid">
 
             {% for hotel in hotels %}
 
-                <div class="hotel-card">
+            <div class="hotel-card">
 
-                    {% if hotel.image %}
+                {% if hotel.image %}
 
-                        <img
-                            src="{{ hotel.image.url }}"
-                            alt="{{ hotel.name }}"
-                        >
+                <img src="{{ hotel.image.url }}" alt="{{ hotel.name }}">
 
-                    {% else %}
+                {% else %}
 
-                        <div class="hotel-placeholder">
-                            GRAND STAY
-                        </div>
+                <div class="hotel-placeholder">
+                    GRAND STAY
+                </div>
 
-                    {% endif %}
+                {% endif %}
 
 
-                    <div class="hotel-card-content">
+                <div class="hotel-card-content">
 
-                        <p class="hotel-location">
-                            {{ hotel.location }}
-                        </p>
+                    <p class="hotel-location">
+                        {{ hotel.location }}
+                    </p>
 
-                        <h3>
-                            {{ hotel.name }}
-                        </h3>
+                    <h3>
+                        {{ hotel.name }}
+                    </h3>
 
-                        <p>
-                            {{ hotel.description }}
-                        </p>
+                    <p>
+                        {{ hotel.description }}
+                    </p>
 
-                        <a
-                            href="{% url 'room_list' hotel.id %}"
-                            class="primary-btn"
-                        >
-                            View Rooms
-                        </a>
-
-                    </div>
+                    <a href="{% url 'room_list' hotel.id %}" class="primary-btn">
+                        View Rooms
+                    </a>
 
                 </div>
+
+            </div>
 
             {% endfor %}
 
         </div>
 
-    {% else %}
+        {% else %}
 
         <div class="no-results">
 
@@ -187,19 +170,17 @@
                 Try searching for another hotel or location.
             </p>
 
-            <a
-                href="{% url 'home' %}"
-                class="secondary-btn"
-            >
+            <a href="{% url 'home' %}" class="secondary-btn">
                 View All Hotels
             </a>
 
         </div>
 
-    {% endif %}
+        {% endif %}
 
-</section>
+    </section>
 
 
 </body>
+
 </html>
