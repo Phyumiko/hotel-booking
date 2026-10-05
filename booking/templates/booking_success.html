@@ -1,0 +1,119 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Booking Successful | Grand Stay</title>
+
+    <link rel="stylesheet"
+          href="{% static 'booking/css/style.css' %}">
+</head>
+
+<body>
+
+<nav class="navbar">
+    <div class="logo">GRAND STAY</div>
+
+    <div class="nav-links">
+        <a href="{% url 'home' %}">Hotels</a>
+        <a href="{% url 'my_bookings' %}">My Bookings</a>
+        <a href="{% url 'logout' %}">Logout</a>
+    </div>
+</nav>
+
+
+<section class="success-page">
+
+    <div class="success-card">
+
+        <div class="success-icon">
+            ✓
+        </div>
+
+        <h1>Booking Confirmed!</h1>
+
+        <p class="success-message">
+            Your booking has been successfully submitted.
+        </p>
+
+
+        {% if booking %}
+
+        <div class="booking-summary">
+
+            <div class="summary-row">
+                <span>Booking ID</span>
+                <strong>#{{ booking.id }}</strong>
+            </div>
+
+            <div class="summary-row">
+                <span>Hotel</span>
+                <strong>{{ booking.room.hotel.name }}</strong>
+            </div>
+
+            <div class="summary-row">
+                <span>Room</span>
+                <strong>
+                    {{ booking.room.room_number }}
+                    · {{ booking.room.room_type }}
+                </strong>
+            </div>
+
+            <div class="summary-row">
+                <span>Check-in</span>
+                <strong>{{ booking.check_in }}</strong>
+            </div>
+
+            <div class="summary-row">
+                <span>Check-out</span>
+                <strong>{{ booking.check_out }}</strong>
+            </div>
+
+            <div class="summary-row">
+                <span>Guests</span>
+                <strong>{{ booking.guests }}</strong>
+            </div>
+
+            <div class="summary-row">
+                <span>Status</span>
+
+                <strong class="status-pending">
+                    {{ booking.status }}
+                </strong>
+            </div>
+            <div class="summary-row total-price">
+                <span>Total Price</span>
+
+                <strong>
+                    ${{ booking.total_price }}
+                </strong>
+            </div>
+
+        </div>
+
+        {% endif %}
+
+
+        <div class="success-actions">
+
+            <a href="{% url 'my_bookings' %}"
+               class="primary-btn">
+                View My Bookings
+            </a>
+
+            <a href="{% url 'home' %}"
+               class="secondary-btn">
+                Back to Hotels
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+</body>
+</html>

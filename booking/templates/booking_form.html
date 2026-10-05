@@ -1,0 +1,217 @@
+[9/18/2026 5:08 PM] Phyu Mi Ko: {% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Book Room | Grand Stay</title>
+
+    <link rel="stylesheet"
+          href="{% static 'booking/css/style.css' %}">
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <div class="logo">
+        GRAND STAY
+    </div>
+
+    <div class="nav-links">
+
+        <a href="{% url 'home' %}">
+            Hotels
+        </a>
+
+        <a href="{% url 'my_bookings' %}">
+            My Bookings
+        </a>
+
+        <a href="{% url 'logout' %}">
+            Logout
+        </a>
+
+    </div>
+
+</nav>
+
+
+<section class="booking-page">
+
+    <div class="booking-container">
+
+        <!-- Room Information -->
+
+        <div class="booking-room">
+
+            {% if room.image %}
+
+                <img src="{{ room.image.url }}"
+                     alt="{{ room.room_type }}">
+
+            {% else %}
+
+                <div class="room-placeholder">
+                    GRAND STAY
+                </div>
+
+            {% endif %}
+
+
+            <div class="booking-room-info">
+
+                <p class="room-label">
+                    {{ room.room_type }}
+                </p>
+
+                <h1>
+                    Room {{ room.room_number }}
+                </h1>
+
+                <p>
+                    {{ room.hotel.name }}
+                </p>
+
+                <div class="room-details">
+
+                    <span>
+                        👤 {{ room.capacity }} Guests
+                    </span>
+
+                    <span>
+                        ${{ room.price }} / night
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Booking Form -->
+
+        <div class="booking-form-card">
+
+            <h2>
+                Book Your Stay
+            </h2>
+
+            <p class="form-subtitle">
+                Select your check-in and check-out dates.
+            </p>
+
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+
+                <!-- Error Message -->
+
+                {% if form.non_field_errors %}
+
+                    <div class="form-error">
+
+                        {% for error in form.non_field_errors %}
+
+                            <p>
+                                {{ error }}
+                            </p>
+
+                        {% endfor %}
+
+                    </div>
+
+                {% endif %}
+
+
+                <!-- Check In -->
+
+                <div class="form-group">
+
+                    <label for="{{ form.check_in.id_for_label }}">
+                        Check-in
+                    </label>
+
+                    {{ form.check_in }}
+
+                    {% for error in form.check_in.errors %}
+
+                        <small class="field-error">
+                            {{ error }}
+                        </small>
+
+                    {% endfor %}
+
+                </div>
+
+
+                <!-- Check Out -->
+
+                <div class="form-group">
+
+                    <label for="{{ form.check_out.id_for_label }}">
+                        Check-out
+                    </label>
+
+                    {{ form.check_out }}
+
+                    {% for error in form.check_out.errors %}
+
+                        <small class="field-error">
+                            {{ error }}
+                        </small>
+
+                    {% endfor %}
+
+                </div>
+
+
+                <!-- Guests -->
+
+                <div class="form-group">
+
+                    <label for="{{ form.guests.id_for_label }}">
+                        Guests
+                    </label>
+
+                    {{ form.guests }}
+
+                    {% for error in form.guests.errors %}
+
+                        <small class="field-error">
+                            {{ error }}
+                        </small>
+
+                    {% endfor %}
+
+                </div>
+
+
+                <button type="submit"
+                        class="booking-submit">
+
+                    Confirm Booking
+
+                </button>
+[9/18/2026 5:08 PM] Phyu Mi Ko: <a href="{% url 'room_detail' room.id %}"
+                   class="booking-back">
+
+                    ← Back to Room
+
+                </a>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</section>
+
+</body>
+</html>

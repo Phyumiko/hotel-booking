@@ -1,0 +1,60 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Register | Grand Stay</title>
+
+    <link rel="stylesheet"
+          href="{% static 'booking/css/style.css' %}">
+</head>
+
+<body class="auth-page">
+
+<div class="auth-container">
+
+    <div class="auth-box">
+
+        <a href="{% url 'home' %}" class="auth-logo">
+            GRAND STAY
+        </a>
+
+        <h1>Create Account</h1>
+
+        <p class="auth-subtitle">
+            Join us and start booking your perfect stay.
+        </p>
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <button type="submit" class="auth-btn">
+                Create Account
+            </button>
+
+        </form>
+
+        <p class="auth-footer">
+            Already have an account?
+
+            <a href="{% url 'login' %}">
+                Login
+            </a>
+        </p>
+
+        <a href="{% url 'home' %}" class="back-home">
+            ← Back to Home
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+</html>

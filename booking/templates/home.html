@@ -1,0 +1,205 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Grand Stay</title>
+
+    <link rel="stylesheet"
+          href="{% static 'booking/css/style.css' %}">
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<nav class="navbar">
+    <div class="nav-container">
+        <div class="logo">
+            <div>
+                <h2>Grand Stay</h2>
+                <small>Hotel & Resort</small>
+            </div>
+        </div>
+    </div>
+
+    
+
+    <div class="nav-links">
+
+        {% if user.is_authenticated %}
+
+            <span>Hi, {{ user.username }}</span>
+
+            <a href="{% url 'my_bookings' %}">
+                My Bookings
+            </a>
+
+            <a href="{% url 'logout' %}">
+                Logout
+            </a>
+
+        {% else %}
+
+            <a href="{% url 'login' %}">
+                Login
+            </a>
+
+            <a href="{% url 'register' %}">
+                Register
+            </a>
+
+        {% endif %}
+
+    </div>
+
+</nav>
+
+
+<!-- HERO -->
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <p class="hero-small">
+            WELCOME TO
+        </p>
+
+        <h1>
+            GRAND STAY
+        </h1>
+
+        <p>
+            Discover beautiful hotels and comfortable rooms
+            for your perfect stay.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- SEARCH -->
+
+<section class="hotel-search">
+
+    <form method="GET"
+          action="{% url 'home' %}">
+
+        <input
+            type="text"
+            name="q"
+            value="{{ query }}"
+            placeholder="Search hotel or location..."
+        >
+
+        <button type="submit">
+            Search
+        </button>
+
+    </form>
+
+</section>
+
+
+<!-- HOTELS -->
+
+<section class="hotels-section">
+
+    <div class="section-heading">
+
+        <p>OUR HOTELS</p>
+
+        <h2>
+            Find Your Perfect Stay
+        </h2>
+
+    </div>
+
+
+    {% if hotels %}
+
+        <div class="hotel-grid">
+
+            {% for hotel in hotels %}
+
+                <div class="hotel-card">
+
+                    {% if hotel.image %}
+
+                        <img
+                            src="{{ hotel.image.url }}"
+                            alt="{{ hotel.name }}"
+                        >
+
+                    {% else %}
+
+                        <div class="hotel-placeholder">
+                            GRAND STAY
+                        </div>
+
+                    {% endif %}
+
+
+                    <div class="hotel-card-content">
+
+                        <p class="hotel-location">
+                            {{ hotel.location }}
+                        </p>
+
+                        <h3>
+                            {{ hotel.name }}
+                        </h3>
+
+                        <p>
+                            {{ hotel.description }}
+                        </p>
+
+                        <a
+                            href="{% url 'room_list' hotel.id %}"
+                            class="primary-btn"
+                        >
+                            View Rooms
+                        </a>
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="no-results">
+
+            <h3>
+                No hotels found
+            </h3>
+
+            <p>
+                Try searching for another hotel or location.
+            </p>
+
+            <a
+                href="{% url 'home' %}"
+                class="secondary-btn"
+            >
+                View All Hotels
+            </a>
+
+        </div>
+
+    {% endif %}
+
+</section>
+
+
+</body>
+</html>

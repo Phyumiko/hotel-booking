@@ -1,0 +1,121 @@
+{% load static %}
+<title>Room {{ room.room_number }} | Grand Stay</title>
+
+<link rel="stylesheet"
+      href="{% static 'booking/css/style.css' %}">
+<a href="{% url 'home' %}" class="logo">
+    GRAND STAY
+</a>
+
+<nav>
+
+    {% if user.is_authenticated %}
+
+        <span class="welcome">
+            Hi, {{ user.username }}
+        </span>
+
+        <a href="{% url 'my_bookings' %}">
+            My Bookings
+        </a>
+
+        <a href="{% url 'logout' %}">
+            Logout
+        </a>
+
+    {% else %}
+
+        <a href="{% url 'login' %}">
+            Login
+        </a>
+
+        <a href="{% url 'register' %}" class="nav-btn">
+            Register
+        </a>
+
+    {% endif %}
+
+</nav>
+<div class="detail-card">
+
+    <div class="detail-image">
+
+        {% if room.image %}
+
+            <img src="{{ room.image.url }}"
+                 alt="Room {{ room.room_number }}">
+
+        {% else %}
+
+            <div class="detail-no-image">
+                ROOM {{ room.room_number }}
+            </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <div class="detail-content">
+
+        <p class="room-type">
+            {{ room.room_type }}
+        </p>
+
+        <h1>
+            Room {{ room.room_number }}
+        </h1>
+
+        <p class="hotel-name">
+            {{ room.hotel.name }}
+        </p>
+
+        <div class="detail-line"></div>
+
+
+        <div class="detail-info">
+
+            <div>
+                <span>Guests</span>
+                <strong>
+                    {{ room.capacity }}
+                </strong>
+            </div>
+
+            <div>
+                <span>Price / Night</span>
+                <strong>
+                    {{ room.price }}
+                </strong>
+            </div>
+
+        </div>
+
+
+        <p class="detail-description">
+            Enjoy a comfortable and relaxing stay in
+            this beautiful {{ room.room_type }} room.
+            Perfect for your visit to
+            {{ room.hotel.location }}.
+        </p>
+
+
+        <a href="{% url 'book_room' room.id %}"
+           class="large-book-btn">
+
+            Book This Room →
+
+        </a>
+
+
+        <a href="{% url 'room_list' room.hotel.id %}"
+           class="back-link">
+
+            ← Back to Rooms
+
+        </a>
+
+    </div>
+
+</div>
+<p>© 2026 Grand Stay Hotel</p>
